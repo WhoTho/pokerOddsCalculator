@@ -249,4 +249,5 @@ document.querySelector("#reset").addEventListener("click", () => {
 
     winPercentageElement.textContent = "Win Percentage: 0%";
     tiePercentageElement.textContent = "Tie Percentage: 0%";
+    winPercentageElement.style.color = "white";
 });
