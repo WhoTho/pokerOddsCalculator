@@ -1,8 +1,6 @@
 class Game {
-    constructor(numOfOpponents = 1) {
+    constructor() {
         this.reset();
-
-        this.numOfOpponents = numOfOpponents;
     }
 
     reset() {
@@ -14,16 +12,21 @@ class Game {
                 "CDHS".split("").map((suit) => cardValue + suit)
             )
             .flat();
+        this.numberOfOpponents = 1;
     }
 
     setMyHand(hand) {
         this.myHand = hand.slice();
-        this._removeCards(hand);
+        this.removeCards(hand);
     }
 
     setMiddleCards(middleCards) {
         this.middleCards = middleCards.slice();
-        this._removeCards(middleCards);
+        this.removeCards(middleCards);
+    }
+
+    setNumberOfOpponents(numberOfOpponents) {
+        this.numberOfOpponents = numberOfOpponents;
     }
 
     dealRandomCard() {
@@ -33,20 +36,16 @@ class Game {
         )[0];
     }
 
-    _removeCards(cards) {
+    removeCards(cards) {
         this.availableCards = this.availableCards.filter(
             (card) => !cards.includes(card)
         );
     }
 
-    _removeCard(card) {
-        this._removeCards([card]);
-    }
-
     simulate() {
         let opponentHands = [];
 
-        for (let i = 0; i < this.numOfOpponents; i++) {
+        for (let i = 0; i < this.numberOfOpponents; i++) {
             opponentHands.push([this.dealRandomCard(), this.dealRandomCard()]);
         }
 
@@ -60,42 +59,21 @@ class Game {
             this.middleCards
         );
 
-        // if (winner.winner === "Tie" && HI === 1) {
-        //     HI = 0;
-
-        //     console.log(this.availableCards.length);
-        //     console.log("Player hand:", this.myHand);
-        //     console.log("Opponent hand:", opponentHand);
-        //     console.log("Middle cards:", this.middleCards);
-        //     console.log("Winner:", winner.winner);
-        //     console.log("My rankings:");
-        //     for (let ranking of winner.myRankings) {
-        //         console.log(
-        //             HandRankings.rankingToString(ranking[0]),
-        //             "with deciding value",
-        //             ranking[1]
-        //         );
-        //     }
-
-        //     console.log("\nOpponent rankings:");
-        //     for (let ranking of winner.opponentRankings) {
-        //         console.log(
-        //             HandRankings.rankingToString(ranking[0]),
-        //             "with deciding value",
-        //             ranking[1]
-        //         );
-        //     }
-        // }
-
         return winner;
     }
 
-    simulateMultipleGames(myHand, middle, n) {
-        let wins = { Player: 0, Opponent: 0, Tie: 0 };
-        for (let i = 0; i < n; i++) {
+    simulateMultipleGames(
+        myHand,
+        middle,
+        numOfOpponents,
+        numOfGames,
+        wins = { Player: 0, Opponent: 0, Tie: 0 }
+    ) {
+        for (let i = 0; i < numOfGames; i++) {
             this.reset();
             this.setMyHand(myHand);
             this.setMiddleCards(middle);
+            this.setNumberOfOpponents(numOfOpponents);
 
             let winner = this.simulate();
             wins[winner.winner]++;
@@ -157,28 +135,6 @@ class Game {
                 break;
             }
         }
-
-        // let opponentRankings = HandRankings.calculateRankings(
-        //     this,
-        //     opponentHand.concat(middleCards)
-        // );
-
-        // let winner = "Tie";
-        // for (let i = 0; i < myRankings.length; i++) {
-        //     if (myRankings[i][0] > opponentRankings[i][0]) {
-        //         winner = "Player";
-        //         break;
-        //     } else if (myRankings[i][0] < opponentRankings[i][0]) {
-        //         winner = "Opponent";
-        //         break;
-        //     } else if (myRankings[i][1] > opponentRankings[i][1]) {
-        //         winner = "Player";
-        //         break;
-        //     } else if (myRankings[i][1] < opponentRankings[i][1]) {
-        //         winner = "Opponent";
-        //         break;
-        //     }
-        // }
 
         return {
             winner,
@@ -386,12 +342,16 @@ Middle cards: [ 'QD', 'JD', '5H', '2D', '3C' ]
 //     );
 // }
 
-n = 50_000;
-g = new Game(1);
-startTime = Date.now();
-results = g.simulateMultipleGames(["AH", "AS"], [], n);
-// console.log(results);
-console.log(`Time taken for ${n} simulations: ${Date.now() - startTime}ms`);
-console.log(`Player win rate: ${100 * (results.Player / n)}%`);
-console.log(`Opponent win rate: ${100 * (results.Opponent / n)}%`);
-console.log(`Tie rate: ${100 * (results.Tie / n)}%`);
+// let wins = undefined;
+// let g = new Game(1);
+// let startTime = Date.now();
+// let n = 500;
+// for (let i = 0; i < 100; i++) {
+//     wins = g.simulateMultipleGames(["AH", "AS"], [], n, wins);
+//     // console.log(results);
+// }
+// let total = n * 100;
+// console.log(`Time taken for ${total} simulations: ${Date.now() - startTime}ms`);
+// console.log(`Player win rate: ${100 * (wins.Player / total)}%`);
+// console.log(`Opponent win rate: ${100 * (wins.Opponent / total)}%`);
+// console.log(`Tie rate: ${100 * (wins.Tie / total)}%\n`);

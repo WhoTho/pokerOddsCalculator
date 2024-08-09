@@ -1,11 +1,81 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Poker Odds Calculator</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <h1>uh poker</h1>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Poker Odds Calculator</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    <body>
+        <div id="content-wrapper">
+            <h1>Middle Cards</h1>
+            <div id="middle-cards">
+                <div class="card unknown"></div>
+                <div class="card unknown"></div>
+                <div class="card unknown"></div>
+                <div class="card unknown"></div>
+                <div class="card unknown"></div>
+            </div>
+            <h1>Your Cards</h1>
+            <div id="player-cards">
+                <div class="card unknown"></div>
+                <div class="card unknown"></div>
+            </div>
+            <h1># of Opponents</h1>
+            <div id="opponent">
+                <div id="opponent-number-wrapper">
+                    <button
+                        class="number-incrementor"
+                        id="opponent-number-minus"
+                    >
+                        -
+                    </button>
+                    <input id="opponent-number" type="number" value="1" />
+                    <button
+                        class="number-incrementor"
+                        id="opponent-number-plus"
+                    >
+                        +
+                    </button>
+                </div>
+            </div>
+
+            <div id="odds">
+                <p id="win-percentage">Win Percentage: 0%</p>
+                <p id="tie-percentage">Tie Percentage: 0%</p>
+                <button id="calculate-odds" disabled>Calculate</button>
+                <button id="reset">Reset</button>
+            </div>
+            <!-- <div class="card" data-value="A" data-suit="H"></div> -->
+        </div>
+        <div id="card-selector">
+            <div id="card-values">
+                <div class="card" data-value="2"></div>
+                <div class="card" data-value="3"></div>
+                <div class="card" data-value="4"></div>
+                <div class="card" data-value="5"></div>
+                <div class="card" data-value="6"></div>
+                <div class="card" data-value="7"></div>
+                <div class="card" data-value="8"></div>
+                <div class="card" data-value="9"></div>
+                <div class="card" data-value="T"></div>
+                <div class="card" data-value="J"></div>
+                <div class="card" data-value="Q"></div>
+                <div class="card" data-value="K"></div>
+                <div class="card" data-value="A"></div>
+            </div>
+            <div id="card-suits">
+                <div class="card" data-suit="H"></div>
+                <div class="card" data-suit="D"></div>
+                <div class="card" data-suit="C"></div>
+                <div class="card" data-suit="S"></div>
+            </div>
+            <div id="card-selector-buttons">
+                <button id="submit-card-selector">&#x2714;</button>
+                <button id="cancel-card-selector">&#10006;</button>
+            </div>
+        </div>
+        <script src="calculator.js"></script>
+        <script src="script.js"></script>
+    </body>
 </html>
